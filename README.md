@@ -10,16 +10,28 @@ go run .
 
 ## API 
 
-```
-curl http://localhost:8080/request -X POST -d '{"type":"test"}'
-```
-
+### API Request
 ```
 {
+    "name": "example_response",
     "type": "test",
-    "slots": [
-        {"name": "John Doe"},
-        {"turns": "4"}
-    ]
+    "slots": {
+        "name": "John Doe",
+        "turns": "4"
+    }
 }
 ```
+
+
+```
+curl http://localhost:8080/request -X POST -d '{
+    "name": "example_response",
+    "type": "test",
+    "slots": {
+        "name": "John Doe",
+        "turns": "4"
+    }
+}'
+```
+
+### API Response

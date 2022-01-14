@@ -8,12 +8,9 @@ import (
 )
 
 type request struct {
-	Type string `json:"type"`
-	// Slots map[string]string `json:"slots"`
-	// does not work as expected yet I think
-	Slots []struct {
-		values map[string]interface{}
-	} `json:"slots"`
+	Name  string            `json:"name"`
+	Type  string            `json:"type"`
+	Slots map[string]string `json:"slots"`
 }
 
 type response struct {
@@ -33,9 +30,11 @@ func HandleRequest(c *gin.Context) {
 		return
 	}
 
+	fmt.Println(req.Name)
+
 	fmt.Println(req.Type)
 
-	fmt.Println(req.Slots[0].values)
+	fmt.Println(req.Slots)
 
 	c.IndentedJSON(http.StatusOK, example_response)
 }
