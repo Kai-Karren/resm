@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/Kai-Karren/resm/managers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,10 +16,17 @@ type request struct {
 
 type response struct {
 	Type string `json:"response"`
+	Text string `json:"text"`
 }
 
 var example_response = response{
 	Type: "example response",
+}
+
+var de_responses = make(map[string]string)
+
+var response_manager = managers.StaticResponseManager{
+	Name_to_response: de_responses,
 }
 
 func HandleRequest(c *gin.Context) {
@@ -36,7 +44,20 @@ func HandleRequest(c *gin.Context) {
 
 	fmt.Println(req.Slots)
 
-	c.IndentedJSON(http.StatusOK, example_response)
+	de_responses["example_response"] = "This is an example response."
+
+	de_response, err := response_manager.GetResponse(req.Name)
+
+	if err == nil {
+		var res = response{
+			Type: "test",
+			Text: de_response,
+		}
+		c.IndentedJSON(http.StatusOK, res)
+	} else {
+		c.IndentedJSON(http.StatusInternalServerError, example_response)
+	}
+
 }
 
 // func main() {
