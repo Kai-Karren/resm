@@ -13,8 +13,7 @@ go run .
 ### API Request
 ```
 {
-    "name": "example_response",
-    "type": "test",
+    "response": "example_response",
     "slots": {
         "name": "John Doe",
         "turns": "4"
@@ -25,8 +24,7 @@ go run .
 
 ```
 curl http://localhost:8080/request -X POST -d '{
-    "name": "example_response",
-    "type": "test",
+    "response": "example_response",
     "slots": {
         "name": "John Doe",
         "turns": "4"
