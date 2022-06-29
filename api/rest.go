@@ -2,6 +2,7 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/Kai-Karren/resm/managers"
@@ -48,7 +49,8 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 		}
 		c.IndentedJSON(http.StatusOK, res)
 	} else {
-		c.IndentedJSON(http.StatusInternalServerError, example_response)
+		log.Println(err.Error())
+		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "500", "message": err.Error()})
 	}
 
 }
