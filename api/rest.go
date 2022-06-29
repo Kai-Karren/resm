@@ -22,13 +22,11 @@ var example_response = response{
 	Response: "example response",
 }
 
-var de_responses = make(map[string]string)
-
-var response_manager = managers.StaticResponseManager{
-	Name_to_response: de_responses,
+type SimpleAPI struct {
+	ResponseManager managers.StaticResponseManager
 }
 
-func HandleRequest(c *gin.Context) {
+func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 
 	var req request
 
@@ -41,14 +39,12 @@ func HandleRequest(c *gin.Context) {
 
 	fmt.Println(req.Slots)
 
-	de_responses["example_response"] = "This is an example response."
-
-	de_response, err := response_manager.GetResponse(req.Response)
+	deResponse, err := simpleApi.ResponseManager.GetResponse(req.Response)
 
 	if err == nil {
 		var res = response{
 			Response: "test",
-			Text:     de_response,
+			Text:     deResponse,
 		}
 		c.IndentedJSON(http.StatusOK, res)
 	} else {
@@ -56,10 +52,3 @@ func HandleRequest(c *gin.Context) {
 	}
 
 }
-
-// func main() {
-// 	router := gin.Default()
-// 	router.POST("/request", handleRequest)
-
-// 	router.Run("localhost:8080")
-// }
