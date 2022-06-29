@@ -19,10 +19,6 @@ type response struct {
 	Text     string `json:"text"`
 }
 
-var example_response = response{
-	Response: "example response",
-}
-
 type SimpleAPI struct {
 	ResponseManager managers.StaticResponseManager
 }

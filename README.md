@@ -1,19 +1,22 @@
-# resm
-RESM which stands for response manager is a service for handling response generation in a dialogue system.
+# RESM
 
+RESM which stands for response manager is a service for handling response generation in a dialogue system.
 
 ## Run
 
-```
+```bash
 go run .
 ```
 
-## API 
+## Simple API
+
+RESM's most simple API that provided basic features.
 
 ### API Request
-```
+
+```json
 {
-    "response": "example_response",
+    "response": "utter_example",
     "slots": {
         "name": "John Doe",
         "turns": "4"
@@ -21,10 +24,9 @@ go run .
 }
 ```
 
-
-```
+```bash
 curl http://localhost:8080/request -X POST -d '{
-    "response": "example_response",
+    "response": "utter_example",
     "slots": {
         "name": "John Doe",
         "turns": "4"
@@ -33,3 +35,14 @@ curl http://localhost:8080/request -X POST -d '{
 ```
 
 ### API Response
+
+```json
+{
+    "response": "utter_example",
+    "text": "This is an example response from RESM"
+}
+```
+
+## Rasa Compatible API
+
+TBD
