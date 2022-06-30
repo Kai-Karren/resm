@@ -2,6 +2,17 @@
 
 RESM which stands for response manager is a service for handling response generation in a dialogue system.
 
+It has been motivated by my previous nlg-server implementation in Java and also acts as a project to use more Go in my personal
+projects.
+
+## Use Case
+
+When you have a dialogue system in which you want to separate the actual response generation from the dialogue control you can achieve this with RESM.
+
+E.g. when you are using Rasa and you do not want to deploy a new model for just simple changes to the response text.
+
+RESM is written in Go and is therefore lightweight and fast.
+
 ## Run
 
 ```bash
