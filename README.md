@@ -19,6 +19,16 @@ RESM is written in Go and is therefore lightweight and fast.
 go run .
 ```
 
+## Tests
+
+To run the test cases recursively to run the tests in the submodules run
+
+```bash
+go test -v ./...
+```
+
+As a reminder, test files have to end with _test in Go.
+
 ## Simple API
 
 RESM's most simple API that provided basic features.
