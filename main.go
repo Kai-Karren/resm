@@ -25,7 +25,7 @@ func main() {
 	printLoadedResponses(deResponses)
 
 	var responseManager = managers.StaticResponseManager{
-		Name_to_response: deResponses,
+		NameToResponse: deResponses,
 	}
 
 	// var simpleApi = api.SimpleAPI{

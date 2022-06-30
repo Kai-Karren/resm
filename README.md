@@ -56,4 +56,5 @@ curl http://localhost:8080/nlg -X POST -d '{
 
 ## Rasa Compatible API
 
-TBD
+The Rasa API implementation can act as NLG server following https://rasa.com/docs/rasa/nlg/.
+Has been last tested with Rasa 3.2.1
