@@ -1,4 +1,5 @@
 {
     "utter_test":"test",
-    "utter_example": "This is an example utterance"
+    "utter_example": "This is an example utterance",
+    "utter_greet": "Willkommen, wie heißt du?"
 }
