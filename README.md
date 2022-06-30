@@ -25,7 +25,7 @@ RESM's most simple API that provided basic features.
 ```
 
 ```bash
-curl http://localhost:8080/request -X POST -d '{
+curl http://localhost:8080/nlg -X POST -d '{
     "response": "utter_example",
     "slots": {
         "name": "John Doe",

@@ -14,8 +14,34 @@ import (
 type rasaNlgRequest struct {
 	Response  string                 `json:"response"`
 	Arguments map[string]interface{} `json:"arguments"`
-	Tracker   map[string]interface{} `json:"tracker"`
-	Channel   string                 `json:"channel"`
+	Tracker   tracker                `json:"tracker"`
+	Channel   channel                `json:"channel"`
+}
+
+type tracker struct {
+	SenderId      string            `json:"sender_id"`
+	Slots         map[string]string `json:"slots"`
+	LatestMessage latestMessage     `json:"latest_message"`
+	Events        []interface{}     `json:"events"`
+}
+
+type latestMessage struct {
+	MessageId     string                 `json:"message_id"`
+	Intent        intent                 `json:"intent"`
+	Entities      []interface{}          `json:"entities"`
+	Text          string                 `json:"text"`
+	Metadata      map[string]interface{} `json:"metadata"`
+	IntentRanking []intent               `json:"intent_ranking"`
+}
+
+type intent struct {
+	Id         int64   `json:"id"`
+	Name       string  `json:"name"`
+	Confidence float32 `json:"confidence"`
+}
+
+type channel struct {
+	Name string `json:"name"`
 }
 
 type rasaNlgResponse struct {
@@ -37,7 +63,7 @@ func (api *RasaAPI) HandleRequest(c *gin.Context) {
 
 	fmt.Println(req.Response)
 
-	fmt.Println(req.Tracker)
+	// fmt.Println(req.Tracker)
 
 	deResponse, err := api.ResponseManager.GetResponse(req.Response)
 

@@ -28,12 +28,16 @@ func main() {
 		Name_to_response: deResponses,
 	}
 
-	var simpleApi = api.SimpleAPI{
+	// var simpleApi = api.SimpleAPI{
+	// 	ResponseManager: responseManager,
+	// }
+
+	var api = api.RasaAPI{
 		ResponseManager: responseManager,
 	}
 
 	router := gin.Default()
-	router.POST("/request", simpleApi.HandleRequest)
+	router.POST("/nlg", api.HandleRequest)
 
 	router.Run("localhost:8080")
 
