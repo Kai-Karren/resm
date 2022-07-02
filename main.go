@@ -12,12 +12,6 @@ import (
 
 func main() {
 
-	// var deResponses = make(map[string]string)
-
-	// deResponses["example_response"] = "This is an example response."
-	// deResponses["another_response"] = "This is another example response."
-	// deResponses["utter_test"] = "test, test."
-
 	deResponses := readJsonFile()
 
 	fmt.Println(deResponses["utter_test"])
@@ -27,10 +21,6 @@ func main() {
 	var responseManager = responses.StaticResponseManager{
 		NameToResponse: deResponses,
 	}
-
-	// var simpleApi = api.SimpleAPI{
-	// 	ResponseManager: responseManager,
-	// }
 
 	var api = api.RasaAPI{
 		ResponseManager: responseManager,

@@ -2,8 +2,9 @@
 
 RESM which stands for response manager is a service for handling response generation in a dialogue system.
 
-It has been motivated by my previous nlg-server implementation in Java and also acts as a project to use more Go in my personal
-projects.
+It is a personal project in early development that has been motivated by my previous nlg-server implementation in Java
+to replicate it in Go to deepen my understanding of Go and potentially to add more features to RESM compared to the Java version.
+The Java version I maintain can be found here [NLG-Server](https://github.com/Kai-Karren/nlg-server)
 
 ## Use Case
 
@@ -66,5 +67,79 @@ curl http://localhost:8080/nlg -X POST -d '{
 
 ## Rasa Compatible API
 
-The Rasa API implementation can act as NLG server following https://rasa.com/docs/rasa/nlg/.
+The Rasa API implementation can act as NLG server following [Rasa NLG](https://rasa.com/docs/rasa/nlg/)
 Has been last tested with Rasa 3.2.1
+
+### Rasa API Request
+
+The request for the Rasa API has to look as following:
+For more details please see [Rasa NLG](https://rasa.com/docs/rasa/nlg/)
+
+```json
+{
+"response":"utter_example",
+  "arguments":{
+    
+  },
+  "tracker":{
+    "sender_id":"user_0",
+    "slots":{
+      "number": "42"
+    },
+    "latest_message":{
+      "intent":{
+        "id":3014457480322877053,
+        "name":"greet",
+        "confidence":0.9999994039535522
+      },
+      "entities":[
+        
+      ],
+      "text":"Hello",
+      "message_id":"94838d6f49ff4366b254b6f6d23a90cf",
+      "metadata":{
+        
+      },
+      "intent_ranking":[
+        {
+          "id":3014457480322877053,
+          "name":"greet",
+          "confidence":0.9999994039535522
+        }
+      ]
+    },
+    "latest_event_time":1599476297.694504,
+    "followup_action":null,
+    "paused":false,
+    "events":[
+      {
+        "event":"action",
+        "timestamp":1599476297.68784,
+        "name":"action_session_start",
+        "policy":null,
+        "confidence":null
+      },
+      {
+        "event":"session_started",
+        "timestamp":1599476297.6878452
+      }
+    ],
+    "latest_input_channel":"rest",
+    "active_loop":{
+      
+    },
+    "latest_action_name":"action_listen"
+  },
+  "channel":{
+    "name":"collector"
+  }
+}
+```
+
+### Rasa API Response
+
+```json
+{
+    "text": "This is an example response from RESM."
+}
+```

@@ -61,10 +61,6 @@ func (api *RasaAPI) HandleRequest(c *gin.Context) {
 		return
 	}
 
-	fmt.Println(req.Response)
-
-	// fmt.Println(req.Tracker)
-
 	deResponse, err := api.ResponseManager.GetResponse(req.Response)
 
 	deResponse = fillVariablesIfPresent(deResponse, req.Tracker.Slots)
