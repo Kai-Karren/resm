@@ -1,5 +1,8 @@
 {
     "utter_test":"Test. The number is $number.",
     "utter_example": "This is an example utterance",
-    "utter_greet": "Willkommen, wie heißt du?"
+    "utter_greet": [
+        "Willkommen, wie heißt du?",
+        "Hallo, kannst du mir sagen, wie du heißt?"
+    ]
 }

@@ -43,13 +43,13 @@ func main() {
 
 }
 
-func readJsonFile() map[string]string {
+func readJsonFile() map[string]interface{} {
 
 	data, err := os.ReadFile("responses.json")
 
 	check(err)
 
-	var responses map[string]string
+	var responses map[string]interface{}
 
 	json.Unmarshal([]byte(data), &responses)
 
@@ -57,7 +57,7 @@ func readJsonFile() map[string]string {
 
 }
 
-func printLoadedResponses(responses map[string]string) {
+func printLoadedResponses(responses map[string]interface{}) {
 
 	fmt.Println("Loaded", len(responses), "responses")
 

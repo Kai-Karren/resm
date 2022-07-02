@@ -1,5 +1,5 @@
 curl http://localhost:8080/nlg -X POST -d '{
-"response":"utter_test",
+"response":"utter_greet",
   "arguments":{
     
   },
