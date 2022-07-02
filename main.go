@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/Kai-Karren/resm/api"
-	"github.com/Kai-Karren/resm/managers"
+	"github.com/Kai-Karren/resm/responses"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,7 +24,7 @@ func main() {
 
 	printLoadedResponses(deResponses)
 
-	var responseManager = managers.StaticResponseManager{
+	var responseManager = responses.StaticResponseManager{
 		NameToResponse: deResponses,
 	}
 

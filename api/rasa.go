@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Kai-Karren/resm/managers"
+	"github.com/Kai-Karren/resm/responses"
 	"github.com/gin-gonic/gin"
 )
 
@@ -49,7 +49,7 @@ type rasaNlgResponse struct {
 }
 
 type RasaAPI struct {
-	ResponseManager managers.StaticResponseManager
+	ResponseManager responses.StaticResponseManager
 }
 
 func (api *RasaAPI) HandleRequest(c *gin.Context) {
@@ -66,6 +66,8 @@ func (api *RasaAPI) HandleRequest(c *gin.Context) {
 	// fmt.Println(req.Tracker)
 
 	deResponse, err := api.ResponseManager.GetResponse(req.Response)
+
+	deResponse = fillVariablesIfPresent(deResponse, req.Tracker.Slots)
 
 	if err == nil {
 		var res = rasaNlgResponse{

@@ -6,7 +6,7 @@ curl http://localhost:8080/nlg -X POST -d '{
   "tracker":{
     "sender_id":"user_0",
     "slots":{
-      
+      "number": "42"
     },
     "latest_message":{
       "intent":{

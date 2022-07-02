@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/Kai-Karren/resm/managers"
+	"github.com/Kai-Karren/resm/responses"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +20,7 @@ type response struct {
 }
 
 type SimpleAPI struct {
-	ResponseManager managers.StaticResponseManager
+	ResponseManager responses.StaticResponseManager
 }
 
 func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
@@ -38,6 +38,8 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 
 	deResponse, err := simpleApi.ResponseManager.GetResponse(req.Response)
 
+	deResponse = fillVariablesIfPresent(deResponse, req.Slots)
+
 	if err == nil {
 		var res = response{
 			Response: "test",
@@ -48,5 +50,17 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 		log.Println(err.Error())
 		c.IndentedJSON(http.StatusInternalServerError, gin.H{"error": "500", "message": err.Error()})
 	}
+
+}
+
+func fillVariablesIfPresent(response string, slots map[string]string) string {
+
+	if len(slots) > 0 {
+
+		return responses.FillSlots(response, slots)
+
+	}
+
+	return response
 
 }
