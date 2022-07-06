@@ -1,10 +1,47 @@
 package api
 
+import (
+	"errors"
+	"strings"
+)
+
 type Tracker struct {
 	SenderId      string            `json:"sender_id"`
 	Slots         map[string]string `json:"slots"`
 	LatestMessage LatestMessage     `json:"latest_message"`
 	Events        []Event           `json:"events"`
+}
+
+func (tracker *Tracker) GetLastUtteranceName() (string, error) {
+
+	for i := len(tracker.Events) - 1; i >= 0; i-- {
+
+		event := tracker.Events[i]
+
+		if event.Event == "action" && strings.Contains(event.Name, "utter") {
+			return event.Name, nil
+		}
+
+	}
+
+	return "", errors.New("no utterance found in the events")
+
+}
+
+func (tracker *Tracker) ContainsAction(actionName string) bool {
+
+	for i := 0; i < len(tracker.Events); i++ {
+
+		event := tracker.Events[i]
+
+		if event.Event == "action" && event.Name == actionName {
+			return true
+		}
+
+	}
+
+	return false
+
 }
 
 type LatestMessage struct {
