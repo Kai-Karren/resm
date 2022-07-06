@@ -143,3 +143,7 @@ For more details please see [Rasa NLG](https://rasa.com/docs/rasa/nlg/)
     "text": "This is an example response from RESM."
 }
 ```
+
+## Examples
+
+Examples and experiments with RESM can be found in this [repo](https://github.com/Kai-Karren/resm-examples)
