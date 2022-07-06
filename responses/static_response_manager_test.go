@@ -6,7 +6,7 @@ import (
 
 func TestGetResponse(t *testing.T) {
 
-	var deResponses = make(map[string]string)
+	var deResponses = make(map[string]interface{})
 
 	var testResponse = "test, test."
 

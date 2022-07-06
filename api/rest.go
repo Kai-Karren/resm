@@ -9,12 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type request struct {
+type Request struct {
 	Response string            `json:"response"`
 	Slots    map[string]string `json:"slots"`
 }
 
-type response struct {
+type Response struct {
 	Response string `json:"response"`
 	Text     string `json:"text"`
 }
@@ -25,7 +25,7 @@ type SimpleAPI struct {
 
 func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 
-	var req request
+	var req Request
 
 	if err := c.BindJSON(&req); err != nil {
 		fmt.Println(err)
@@ -41,7 +41,7 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 	deResponse = fillVariablesIfPresent(deResponse, req.Slots)
 
 	if err == nil {
-		var res = response{
+		var res = Response{
 			Response: "test",
 			Text:     deResponse,
 		}
@@ -53,14 +53,14 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 
 }
 
-func fillVariablesIfPresent(response string, slots map[string]string) string {
+func fillVariablesIfPresent(Response string, slots map[string]string) string {
 
 	if len(slots) > 0 {
 
-		return responses.FillSlots(response, slots)
+		return responses.FillSlots(Response, slots)
 
 	}
 
-	return response
+	return Response
 
 }

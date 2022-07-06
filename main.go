@@ -22,9 +22,9 @@ func main() {
 		NameToResponse: deResponses,
 	}
 
-	var api = api.RasaAPI{
-		ResponseManager: responseManager,
-	}
+	var responseGenerator = api.NewStaticResponseGenerator(responseManager)
+
+	var api = api.NewRasaAPI(&responseGenerator)
 
 	router := gin.Default()
 	router.POST("/nlg", api.HandleRequest)
