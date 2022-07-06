@@ -18,32 +18,6 @@ type RasaNlgRequest struct {
 	Channel   Channel                `json:"channel"`
 }
 
-type Tracker struct {
-	SenderId      string            `json:"sender_id"`
-	Slots         map[string]string `json:"slots"`
-	LatestMessage LatestMessage     `json:"latest_message"`
-	Events        []interface{}     `json:"events"`
-}
-
-type LatestMessage struct {
-	MessageId     string                 `json:"message_id"`
-	Intent        Intent                 `json:"intent"`
-	Entities      []interface{}          `json:"entities"`
-	Text          string                 `json:"text"`
-	Metadata      map[string]interface{} `json:"metadata"`
-	IntentRanking []Intent               `json:"intent_ranking"`
-}
-
-type Intent struct {
-	Id         int64   `json:"id"`
-	Name       string  `json:"name"`
-	Confidence float32 `json:"confidence"`
-}
-
-type Channel struct {
-	Name string `json:"name"`
-}
-
 type RasaNlgResponse struct {
 	Text string `json:"text"`
 }
