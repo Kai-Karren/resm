@@ -4,5 +4,6 @@
     "utter_greet": [
         "Willkommen, wie heißt du?",
         "Hallo, kannst du mir sagen, wie du heißt?"
-    ]
+    ],
+    "utter_default": "Könntest du das bitte anders formulieren?"
 }

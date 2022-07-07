@@ -24,3 +24,4 @@ go.work
 # Customization
 resm
 *.sh
+__*
