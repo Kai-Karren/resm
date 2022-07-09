@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Kai-Karren/resm/responses"
+	"github.com/Kai-Karren/resm/storage"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,7 +21,7 @@ type Response struct {
 }
 
 type SimpleAPI struct {
-	ResponseManager responses.StaticResponseManager
+	ResponseStorage storage.ResponseStorage
 }
 
 func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
@@ -36,7 +37,7 @@ func (simpleApi *SimpleAPI) HandleRequest(c *gin.Context) {
 
 	fmt.Println(req.Slots)
 
-	deResponse, err := simpleApi.ResponseManager.GetResponse(req.Response)
+	deResponse, err := simpleApi.ResponseStorage.GetRandomResponse(req.Response)
 
 	deResponse = fillVariablesIfPresent(deResponse, req.Slots)
 

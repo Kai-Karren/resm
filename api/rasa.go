@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Kai-Karren/resm/rasa"
-	"github.com/Kai-Karren/resm/responses"
+	"github.com/Kai-Karren/resm/storage"
 	"github.com/gin-gonic/gin"
 )
 
@@ -65,18 +65,18 @@ func (api *RasaAPI) HandleRequest(c *gin.Context) {
 }
 
 type StaticResponseGenerator struct {
-	ResponseManager responses.StaticResponseManager
+	ResponseStorage storage.ResponseStorage
 }
 
-func NewStaticResponseGenerator(responseManager responses.StaticResponseManager) StaticResponseGenerator {
+func NewStaticResponseGenerator(responseStorage storage.ResponseStorage) StaticResponseGenerator {
 	return StaticResponseGenerator{
-		ResponseManager: responseManager,
+		ResponseStorage: responseStorage,
 	}
 }
 
 func (generator *StaticResponseGenerator) Generate(nlgRequest RasaNlgRequest) (NlgResponse, error) {
 
-	response, err := generator.ResponseManager.GetResponse(nlgRequest.Response)
+	response, err := generator.ResponseStorage.GetRandomResponse(nlgRequest.Response)
 
 	if err != nil {
 		return NewRasaNlgResponse(""), err

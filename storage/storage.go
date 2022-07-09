@@ -9,8 +9,9 @@ type ResponseStorage interface {
 	GetFirstResponse(responseName string) (string, error)
 	GetRandomResponse(responseName string) (string, error)
 	GetResponses(responseName string) ([]string, error)
-	AddResponse(responseName string, response []string)
-	DeleteResponse(responseName string)
+	SetResponses(responseName string, response []string)
+	AddResponses(responseName string, response []string)
+	DeleteResponses(responseName string)
 }
 
 type InMemoryResponseStorage struct {
@@ -39,7 +40,7 @@ func (storage *InMemoryResponseStorage) GetRandomResponse(responseName string) (
 
 	responses, err := storage.GetResponses(responseName)
 
-	if err == nil {
+	if err != nil {
 		return "", err
 	}
 
@@ -61,13 +62,28 @@ func (storage *InMemoryResponseStorage) GetResponses(responseName string) ([]str
 
 }
 
-func (storage *InMemoryResponseStorage) AddResponse(responseName string, response []string) {
+func (storage *InMemoryResponseStorage) SetResponses(responseName string, responses []string) {
 
-	storage.responses[responseName] = response
+	storage.responses[responseName] = responses
 
 }
 
-func (storage *InMemoryResponseStorage) DeleteResponse(responseName string) {
+func (storage *InMemoryResponseStorage) AddResponses(responseName string, responses []string) {
+
+	res, err := storage.GetResponses(responseName)
+
+	if err != nil {
+		storage.SetResponses(responseName, responses)
+		return
+	}
+
+	res = append(res, responses...)
+
+	storage.SetResponses(responseName, res)
+
+}
+
+func (storage *InMemoryResponseStorage) DeleteResponses(responseName string) {
 
 	delete(storage.responses, responseName)
 

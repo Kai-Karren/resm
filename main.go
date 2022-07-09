@@ -1,28 +1,18 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"os"
-
 	"github.com/Kai-Karren/resm/api"
-	"github.com/Kai-Karren/resm/responses"
+	"github.com/Kai-Karren/resm/storage"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	deResponses := readJsonFile()
+	var responseStorage = storage.NewInMemoryResponseStorage()
 
-	fmt.Println(deResponses["utter_test"])
+	storage.AddResponsesFromJson(&responseStorage, "responses.json")
 
-	printLoadedResponses(deResponses)
-
-	var responseManager = responses.StaticResponseManager{
-		NameToResponse: deResponses,
-	}
-
-	var responseGenerator = api.NewStaticResponseGenerator(responseManager)
+	var responseGenerator = api.NewStaticResponseGenerator(&responseStorage)
 
 	var api = api.NewRasaAPI(&responseGenerator)
 
@@ -31,36 +21,4 @@ func main() {
 
 	router.Run("localhost:8080")
 
-}
-
-func readJsonFile() map[string]interface{} {
-
-	data, err := os.ReadFile("responses.json")
-
-	check(err)
-
-	var responses map[string]interface{}
-
-	json.Unmarshal([]byte(data), &responses)
-
-	return responses
-
-}
-
-func printLoadedResponses(responses map[string]interface{}) {
-
-	fmt.Println("Loaded", len(responses), "responses")
-
-	for response := range responses {
-		fmt.Print(response + " ")
-	}
-
-	fmt.Println()
-
-}
-
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
 }
