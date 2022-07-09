@@ -17,6 +17,12 @@ type InMemoryResponseStorage struct {
 	responses map[string][]string
 }
 
+func NewInMemoryResponseStorage() InMemoryResponseStorage {
+	return InMemoryResponseStorage{
+		responses: make(map[string][]string),
+	}
+}
+
 func (storage *InMemoryResponseStorage) GetFirstResponse(responseName string) (string, error) {
 
 	response := storage.responses[responseName][0]
