@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/Kai-Karren/resm/rasa"
 	"github.com/Kai-Karren/resm/responses"
 	"github.com/gin-gonic/gin"
 )
@@ -14,16 +15,16 @@ import (
 type RasaNlgRequest struct {
 	Response  string                 `json:"response"`
 	Arguments map[string]interface{} `json:"arguments"`
-	Tracker   Tracker                `json:"tracker"`
-	Channel   Channel                `json:"channel"`
+	Tracker   rasa.Tracker           `json:"tracker"`
+	Channel   rasa.Channel           `json:"channel"`
 }
 
-type RasaNlgResponse struct {
+type NlgResponse struct {
 	Text string `json:"text"`
 }
 
-func NewRasaNlgResponse(text string) RasaNlgResponse {
-	return RasaNlgResponse{
+func NewRasaNlgResponse(text string) NlgResponse {
+	return NlgResponse{
 		Text: text,
 	}
 }
@@ -39,7 +40,7 @@ func NewRasaAPI(generator ResponseGenerator) RasaAPI {
 }
 
 type ResponseGenerator interface {
-	Generate(nlgRequest RasaNlgRequest) (RasaNlgResponse, error)
+	Generate(nlgRequest RasaNlgRequest) (NlgResponse, error)
 }
 
 func (api *RasaAPI) HandleRequest(c *gin.Context) {
@@ -73,7 +74,7 @@ func NewStaticResponseGenerator(responseManager responses.StaticResponseManager)
 	}
 }
 
-func (generator *StaticResponseGenerator) Generate(nlgRequest RasaNlgRequest) (RasaNlgResponse, error) {
+func (generator *StaticResponseGenerator) Generate(nlgRequest RasaNlgRequest) (NlgResponse, error) {
 
 	response, err := generator.ResponseManager.GetResponse(nlgRequest.Response)
 
