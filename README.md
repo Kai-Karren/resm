@@ -148,3 +148,41 @@ For more details please see [Rasa NLG](https://rasa.com/docs/rasa/nlg/)
 ## Examples
 
 Examples and experiments with RESM can be found in this [repo](https://github.com/Kai-Karren/resm-examples)
+
+## Response Generators
+
+The Rasa-compatible API provides different so-called Response Generators that handle the response generation of RESM.
+
+### Static Response Generator
+
+The StaticResponseGenerator is the primiarily used Response Generator that allows you to specifiy a mapping between
+a response name and one response text or a set of response variations. Slot values can be injected in the text
+responses with `$slotName` or with `{slotName}`.
+
+### Custom Response Generator
+
+If you want to handler responses by executing custom Go code, you can use the CustomResponseGenerator
+which allows you to pass a mapping between response name and a function that should be run to generate the response.
+This allows dyamic response generation at runtime with almost unlimited possibilities.
+
+```go
+generator := NewCustomResponseGenerator()
+
+exampleHandler := func(request NlgRequest) (NlgResponse, error) {
+  return NewNlgResponse("This is a custom response."), nil
+}
+
+generator.AddHandler("test", exampleHandler)
+```
+
+### Distributed Response Generator
+
+If you want to combine e.g. the Static and the Custom Response Generators in one API, you can do this with the
+DistributedResponseGenerator. It handles the routing of the requests to the corresponding generator. If you are
+using your own Response Generator implementation please make sure to correctly implement the `HandlesResponse` method.
+Currently the DistributedResponseGenerator queries the generators in the order that the have been added each time a request
+is handled. This may change in the future with alternative routing strategies or other alternative implementations.
+
+### Your own Response Generator
+
+Ofcourse it is also possible to create your own Response Generator by implementing the Response Generator interface!
