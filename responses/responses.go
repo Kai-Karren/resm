@@ -5,6 +5,18 @@ import (
 	"strings"
 )
 
+func FillVariablesIfPresent(Response string, slots map[string]string) string {
+
+	if len(slots) > 0 {
+
+		return FillSlots(Response, slots)
+
+	}
+
+	return Response
+
+}
+
 func FillSlots(response string, slots map[string]string) string {
 
 	if containsVariable(response) {

@@ -5,6 +5,25 @@ import (
 	"strings"
 )
 
+// Follows Rasa NLG Server API https://rasa.com/docs/rasa/nlg/
+
+type NlgRequest struct {
+	Response  string                 `json:"response"`
+	Arguments map[string]interface{} `json:"arguments"`
+	Tracker   Tracker                `json:"tracker"`
+	Channel   Channel                `json:"channel"`
+}
+
+type NlgResponse struct {
+	Text string `json:"text"`
+}
+
+func NewRasaNlgResponse(text string) NlgResponse {
+	return NlgResponse{
+		Text: text,
+	}
+}
+
 type Tracker struct {
 	SenderId      string            `json:"sender_id"`
 	Slots         map[string]string `json:"slots"`

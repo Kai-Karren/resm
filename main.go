@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/Kai-Karren/resm/api"
+	"github.com/Kai-Karren/resm/rasa"
 	"github.com/Kai-Karren/resm/storage"
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +13,7 @@ func main() {
 
 	storage.AddResponsesFromJson(&responseStorage, "responses.json")
 
-	var responseGenerator = api.NewStaticResponseGenerator(&responseStorage)
+	var responseGenerator = rasa.NewStaticResponseGenerator(&responseStorage)
 
 	var api = api.NewRasaAPI(&responseGenerator)
 
