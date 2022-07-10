@@ -5,8 +5,6 @@ import (
 	"os"
 )
 
-type JsonInjector struct{}
-
 func AddResponsesFromJson(storage ResponseStorage, fileName string) {
 
 	responses := ReadJsonFile(fileName)

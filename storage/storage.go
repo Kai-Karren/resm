@@ -9,9 +9,11 @@ type ResponseStorage interface {
 	GetFirstResponse(responseName string) (string, error)
 	GetRandomResponse(responseName string) (string, error)
 	GetResponses(responseName string) ([]string, error)
+	GetAllResponseNames() []string
 	SetResponses(responseName string, response []string)
 	AddResponses(responseName string, response []string)
 	DeleteResponses(responseName string)
+	HasResponseFor(responseName string) bool
 }
 
 type InMemoryResponseStorage struct {
@@ -62,6 +64,18 @@ func (storage *InMemoryResponseStorage) GetResponses(responseName string) ([]str
 
 }
 
+func (storage *InMemoryResponseStorage) GetAllResponseNames() []string {
+
+	responseNames := []string{}
+
+	for key := range storage.responses {
+		responseNames = append(responseNames, key)
+	}
+
+	return responseNames
+
+}
+
 func (storage *InMemoryResponseStorage) SetResponses(responseName string, responses []string) {
 
 	storage.responses[responseName] = responses
@@ -86,5 +100,13 @@ func (storage *InMemoryResponseStorage) AddResponses(responseName string, respon
 func (storage *InMemoryResponseStorage) DeleteResponses(responseName string) {
 
 	delete(storage.responses, responseName)
+
+}
+
+func (storage *InMemoryResponseStorage) HasResponseFor(responseName string) bool {
+
+	_, err := storage.GetResponses(responseName)
+
+	return err == nil
 
 }
