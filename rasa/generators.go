@@ -28,12 +28,12 @@ func (generator *StaticResponseGenerator) Generate(nlgRequest NlgRequest) (NlgRe
 	response, err := generator.ResponseStorage.GetRandomResponse(nlgRequest.Response)
 
 	if err != nil {
-		return NewRasaNlgResponse(""), err
+		return NewNlgResponse(""), err
 	}
 
 	response = responses.FillVariablesIfPresent(response, nlgRequest.Tracker.Slots)
 
-	return NewRasaNlgResponse(response), nil
+	return NewNlgResponse(response), nil
 
 }
 
@@ -71,7 +71,7 @@ func (generator *DistributedResponseGenerator) Generate(nlgRequest NlgRequest) (
 
 	}
 
-	return NewRasaNlgResponse(""), errors.New("no response generator could handle the request")
+	return NewNlgResponse(""), errors.New("no response generator could handle the request")
 
 }
 
@@ -148,5 +148,36 @@ func (generator *CustomResponseGenerator) HandlesResponse(responseName string) b
 func (generator *CustomResponseGenerator) AddHandler(responseName string, handler func(NlgRequest) (NlgResponse, error)) {
 
 	generator.handlers[responseName] = handler
+
+}
+
+// Returns a static error message that something went wrong. Should only be used called as last option.
+// Agrees to handle all reponses!
+type DefaultFallbackResponseGenerator struct {
+	DefaultFallbackMessage string
+}
+
+func NewDefaultFallbackGenerator(defaultFallbackMessage string) DefaultFallbackResponseGenerator {
+	return DefaultFallbackResponseGenerator{
+		DefaultFallbackMessage: defaultFallbackMessage,
+	}
+}
+
+func (generator *DefaultFallbackResponseGenerator) Generate(nlgRequest NlgRequest) (NlgResponse, error) {
+
+	return NewNlgResponse(generator.DefaultFallbackMessage), nil
+
+}
+
+func (generator *DefaultFallbackResponseGenerator) GetHandeledResponses() []string {
+
+	return []string{}
+
+}
+
+func (generator *DefaultFallbackResponseGenerator) HandlesResponse(responseName string) bool {
+
+	// Agrees to handle all responses!
+	return true
 
 }

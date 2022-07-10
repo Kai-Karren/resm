@@ -18,7 +18,7 @@ type NlgResponse struct {
 	Text string `json:"text"`
 }
 
-func NewRasaNlgResponse(text string) NlgResponse {
+func NewNlgResponse(text string) NlgResponse {
 	return NlgResponse{
 		Text: text,
 	}

@@ -9,7 +9,7 @@ func TestDistributedResponseGenerator(t *testing.T) {
 	firstGenerator := NewCustomResponseGenerator()
 
 	exampleHandler := func(request NlgRequest) (NlgResponse, error) {
-		return NewRasaNlgResponse("This is a custom response."), nil
+		return NewNlgResponse("This is a custom response."), nil
 	}
 
 	firstGenerator.AddHandler("utter_first", exampleHandler)
@@ -19,10 +19,10 @@ func TestDistributedResponseGenerator(t *testing.T) {
 	secondHandler := func(request NlgRequest) (NlgResponse, error) {
 
 		if request.Channel.Name == "Twilio" {
-			return NewRasaNlgResponse("Twilio response"), nil
+			return NewNlgResponse("Twilio response"), nil
 		}
 
-		return NewRasaNlgResponse("This a response from the second handler."), nil
+		return NewNlgResponse("This a response from the second handler."), nil
 	}
 
 	secondGenerator.AddHandler("utter_second", secondHandler)
@@ -63,7 +63,7 @@ func TestCustomResponseGenerator_simpleCustomResponseHandler(t *testing.T) {
 	generator := NewCustomResponseGenerator()
 
 	exampleHandler := func(request NlgRequest) (NlgResponse, error) {
-		return NewRasaNlgResponse("This is a custom response."), nil
+		return NewNlgResponse("This is a custom response."), nil
 	}
 
 	generator.AddHandler("test", exampleHandler)
