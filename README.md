@@ -15,6 +15,12 @@ E.g. when you are using Rasa and you do not want to deploy a new model for just 
 
 RESM is written in Go and is therefore lightweight and fast.
 
+## Get RESM
+
+```bash
+go get github.com/Kai-Karren/resm
+```
+
 ## Run
 
 ```bash
