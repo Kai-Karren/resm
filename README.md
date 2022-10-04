@@ -1,7 +1,7 @@
 # RESM
 
 RESM which stands for RESponse Manager is an SDK for handling response generation in a dialogue system. It can
-for example be used to build NLG servers for Rasa to separate the response generation form the dialogue control.
+for example be used to build NLG servers for Rasa to separate the response generation from the dialogue control.
 
 It is a personal project in early development that has been motivated by my previous nlg-server implementation in Java
 to replicate it in Go to deepen my understanding of Go and potentially to add more features to RESM compared to the Java version.
@@ -73,7 +73,7 @@ Has been last tested with Rasa 3.2.1
 
 ### Rasa API Request
 
-The request for the Rasa API has to look as following:
+The request for the Rasa API has to look as follows:
 For more details please see [Rasa NLG](https://rasa.com/docs/rasa/nlg/)
 
 ```json
@@ -155,13 +155,13 @@ The Rasa-compatible API provides different so-called Response Generators that ha
 
 ### Static Response Generator
 
-The StaticResponseGenerator is the primiarily used Response Generator that allows you to specifiy a mapping between
+The StaticResponseGenerator is the primary used Response Generator that allows you to specify a mapping between
 a response name and one response text or a set of response variations. Slot values can be injected in the text
 responses with `$slotName` or with `{slotName}`.
 
 ### Custom Response Generator
 
-If you want to handler responses by executing custom Go code, you can use the CustomResponseGenerator
+If you want to handle responses by executing custom Go code, you can use the CustomResponseGenerator
 which allows you to pass a mapping between response name and a function that should be run to generate the response.
 This allows dyamic response generation at runtime with almost unlimited possibilities.
 
@@ -180,9 +180,9 @@ generator.AddHandler("test", exampleHandler)
 If you want to combine e.g. the Static and the Custom Response Generators in one API, you can do this with the
 DistributedResponseGenerator. It handles the routing of the requests to the corresponding generator. If you are
 using your own Response Generator implementation please make sure to correctly implement the `HandlesResponse` method.
-Currently the DistributedResponseGenerator queries the generators in the order that the have been added each time a request
+Currently, the DistributedResponseGenerator queries the generators in the order that have been added each time a request
 is handled. This may change in the future with alternative routing strategies or other alternative implementations.
 
-### Your own Response Generator
+### Your Response Generator
 
-Ofcourse it is also possible to create your own Response Generator by implementing the Response Generator interface!
+Of course, it is also possible to create your own Response Generator by implementing the Response Generator interface!

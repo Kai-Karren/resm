@@ -49,6 +49,70 @@ func (generator *StaticResponseGenerator) HandlesResponse(responseName string) b
 
 }
 
+type StaticResponseGeneratorWithMemory struct {
+	staticResponseGenerator StaticResponseGenerator
+	responseMemory          ResponseMemory
+}
+
+func NewStaticResponseGeneratorWithMemory(responseStorage storage.ResponseStorage) StaticResponseGeneratorWithMemory {
+	return StaticResponseGeneratorWithMemory{
+		staticResponseGenerator: NewStaticResponseGenerator(responseStorage),
+	}
+}
+
+type ResponseMemory struct {
+	usersToResponses map[string]ResponsesForUser
+}
+
+func NewResponseMemory() ResponseMemory {
+	return ResponseMemory{
+		usersToResponses: make(map[string]ResponsesForUser),
+	}
+}
+
+func (responseMemory *ResponseMemory) ContainsResponse(userId string, responseContent string) bool {
+	//TODO
+	return false
+}
+
+type ResponsesForUser struct {
+	UserId                           string
+	responseNamesToSelectedResponses map[string][]string
+}
+
+func NewResponsesForUser(userId string) ResponsesForUser {
+	return ResponsesForUser{
+		UserId:                           userId,
+		responseNamesToSelectedResponses: make(map[string][]string),
+	}
+}
+
+func (generator *StaticResponseGeneratorWithMemory) Generate(nlgRequest NlgRequest) (NlgResponse, error) {
+
+	response, err := generator.staticResponseGenerator.ResponseStorage.GetRandomResponse(nlgRequest.Response)
+
+	if err != nil {
+		return NewNlgResponse(""), err
+	}
+
+	response = responses.FillVariablesIfPresent(response, nlgRequest.Tracker.Slots)
+
+	return NewNlgResponse(response), nil
+
+}
+
+func (generator *StaticResponseGeneratorWithMemory) GetHandeledResponses() []string {
+
+	return generator.staticResponseGenerator.ResponseStorage.GetAllResponseNames()
+
+}
+
+func (generator *StaticResponseGeneratorWithMemory) HandlesResponse(responseName string) bool {
+
+	return generator.staticResponseGenerator.ResponseStorage.HasResponseFor(responseName)
+
+}
+
 type DistributedResponseGenerator struct {
 	generators []ResponseGenerator
 }
