@@ -2,7 +2,6 @@ package storage
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -19,15 +18,12 @@ func AddResponsesFromDir(storage ResponseStorage, dir string) {
 
 	for _, file := range files {
 
-		fmt.Println(isJSON(file.Name()))
-
 		if isJSON(file.Name()) {
 			AddResponsesFromJson(storage, dir+"/"+file.Name())
 		} else if file.IsDir() {
 			AddResponsesFromDir(storage, dir+"/"+file.Name())
 		}
 
-		fmt.Println(file.Name(), file.IsDir())
 	}
 
 }
