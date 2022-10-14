@@ -2,8 +2,41 @@ package storage
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
+	"strings"
 )
+
+func AddResponsesFromDir(storage ResponseStorage, dir string) {
+
+	files, err := ioutil.ReadDir(dir)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, file := range files {
+
+		fmt.Println(isJSON(file.Name()))
+
+		if isJSON(file.Name()) {
+			AddResponsesFromJson(storage, dir+"/"+file.Name())
+		} else if file.IsDir() {
+			AddResponsesFromDir(storage, dir+"/"+file.Name())
+		}
+
+		fmt.Println(file.Name(), file.IsDir())
+	}
+
+}
+
+func isJSON(fileName string) bool {
+
+	return strings.HasSuffix(fileName, ".json")
+
+}
 
 func AddResponsesFromJson(storage ResponseStorage, fileName string) {
 
