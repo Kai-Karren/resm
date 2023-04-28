@@ -165,6 +165,12 @@ The StaticResponseGenerator is the primary used Response Generator that allows y
 a response name and one response text or a set of response variations. Slot values can be injected in the text
 responses with `$slotName` or with `{slotName}`.
 
+### Static Response Generator with Memory (Experimental)
+
+Implementation of a Response Generator that focuses on the better handling of response variations by ensuring
+that all variations of a response are returned to a user before a variation is returned twice. RESM only includes
+an inmemory implementation of the ResponseMemory as of now.
+
 ### Custom Response Generator
 
 If you want to handle responses by executing custom Go code, you can use the CustomResponseGenerator
